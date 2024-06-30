@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.practica.Controller.MedicineViewController">
+    <children>
+        <VBox alignment="CENTER" spacing="10.0" layoutX="20.0" layoutY="20.0">
+            <children>
+                <TableView fx:id="medicinesTable" prefHeight="400.0" prefWidth="800.0">
+                    <columns>
+                        <TableColumn fx:id="idColumn" text="ID" />
+                        <TableColumn fx:id="nameColumn" text="Название" />
+                        <TableColumn fx:id="descriptionColumn" text="Описание" />
+                        <TableColumn fx:id="releaseFormColumn" text="Форма" />
+                        <TableColumn fx:id="dosageColumn" text="Дозировка" />
+                        <TableColumn fx:id="expirationDateColumn" text="Срок годности" />
+                        <TableColumn fx:id="countryColumn" text="Страна производитель" />
+                        <TableColumn fx:id="quantityColumn" text="Количество" />
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

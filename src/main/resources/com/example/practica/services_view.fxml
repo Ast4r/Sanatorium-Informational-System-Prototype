@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.practica.Controller.ServicesViewController">
+    <children>
+        <VBox alignment="CENTER" spacing="10.0" layoutX="20.0" layoutY="20.0">
+            <children>
+                <TableView fx:id="servicesTable" prefHeight="400.0" prefWidth="600.0">
+                    <columns>
+                        <TableColumn fx:id="idColumn" text="ID" />
+                        <TableColumn fx:id="nameColumn" text="Имя" />
+                        <TableColumn fx:id="descriptionColumn" text="Описание" />
+                        <TableColumn fx:id="priceColumn" text="Цена" />
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
