@@ -6,7 +6,7 @@ public class FullName {
     private String firstName;
     private String lastName;
 
-    public FullName(String fullName){
+    public FullName(String fullName) throws Exception {
         this.fullName = fullName;
         splitFullName();
     }
@@ -17,9 +17,14 @@ public class FullName {
     }
 
     //Разделение полного имени на Имя и Фамилию
-    private void splitFullName(){
-        firstName = fullName.split(" ")[0];
-        lastName = fullName.split(" ")[1];
+    private void splitFullName() throws Exception{
+        try {
+            firstName = fullName.split(" ")[0];
+            lastName = fullName.split(" ")[1];
+        }
+        catch (ArrayIndexOutOfBoundsException e){
+            throw new Exception("Поле имя должно состоять из имени и фамилии сотрудника.");
+        }
     }
 
     //Проверка состоит ли полное имя из двух слов.

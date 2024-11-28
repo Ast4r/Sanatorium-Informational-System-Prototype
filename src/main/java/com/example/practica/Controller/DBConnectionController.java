@@ -3,9 +3,12 @@ package com.example.practica.Controller;
 import com.example.practica.Mapper.ResultSetMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.time.LocalDate;
+
+import java.sql.JDBCType.*;
 
 //Класс, который контролирует всю работу приложения с базой данных.
 public class DBConnectionController {
@@ -17,12 +20,20 @@ public class DBConnectionController {
 
     private static Connection connection;
 
-    //Метод смотрит существует ли уже подключение к базе данных и в случае отрицательного ответа
-    //Создает его сам. Открытие многих подключений может сильно снизить производительность.
+    //Метод смотрит существует ли уже подключение к базе данных и в случае отрицательного ответа создает.
     public static Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            connection = DriverManager.getConnection(url, dbUsername, dbPassword);
-            connection.createStatement();
+        try {
+            if (connection == null || connection.isClosed()) {
+                connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+                connection.createStatement();
+            }
+        }
+        catch (SQLException e){
+            Alert dbConnectionAlert = new Alert(Alert.AlertType.ERROR);
+            dbConnectionAlert.setTitle("Ошибка подключения к базе данных!");
+            dbConnectionAlert.setContentText("При подключении к базе данных произошла ошибка, обратитесь к администратору.");
+
+            dbConnectionAlert.show();
         }
         return connection;
     }
@@ -31,16 +42,17 @@ public class DBConnectionController {
     public static boolean searchInDB(String query, String... args) {
 
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             CallableStatement preparedStatement = connection.prepareCall("{? = " + query + "}")) {
 
             for (int i = 1; i <= args.length; i++) {
-                preparedStatement.setString(i, args[i - 1]);
+                preparedStatement.setString(i+1, args[i - 1]);
             }
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                return resultSet.next();
-            }
-        } catch (SQLException e) {
+            preparedStatement.registerOutParameter(1, Types.BOOLEAN);
+            preparedStatement.execute();
+            return preparedStatement.getBoolean(1);
+        }
+        catch (SQLException e) {
             e.printStackTrace();
             return false;
         }

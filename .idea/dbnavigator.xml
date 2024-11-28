@@ -24,7 +24,9 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="82cd37c0-7269-4f0d-8b03-ea6b5ae4e73e" object-ref="consoles/Connection" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="82cd37c0-7269-4f0d-8b03-ea6b5ae4e73e" />
@@ -62,7 +64,7 @@
           <tns-profile value="" />
           <type value="USER_PASSWORD" />
           <user value="postgres" />
-          <deprecated-pwd value="amFtZXMyMDAx" />
+          <deprecated-pwd value="" />
         </database>
         <properties>
           <auto-commit value="false" />

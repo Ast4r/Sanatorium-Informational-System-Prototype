@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 //Этот класс отвечает за назначение услуг пациенту.
+
 public class AssignServiceController {
     //Визуальные элементы формы
     @FXML
@@ -35,14 +36,14 @@ public class AssignServiceController {
                     System.out.println("Услуга добавлена");
                 else
                     showAlert("Ошибка", "Не все поля заполнены", Alert.AlertType.ERROR);
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });
     }
 
     //Данный метод берет информацию из полей формы, проверяет ее и пытается добавить указанную услугу пациенту.
-    private boolean assignServiceToPatient() throws SQLException {
+    private boolean assignServiceToPatient() throws Exception {
         String patientName = patientNameField.getText();
         FullName patientFullName = new FullName(patientName);
 

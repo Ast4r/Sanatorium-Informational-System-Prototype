@@ -7,10 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -37,10 +34,26 @@ public class LoginFormController {
 
     //Проверяет введенные значения, если им соотвествует запись в базе данных, то разрешает вход в систему.
     private void handleLogin() {
-        String username = usernameField.getText();
-        FullName fullName = new FullName(username);
+        String username, password;
+        FullName fullName;
+        try {
+            if (!usernameField.getText().isEmpty() && !passwordField.getText().isEmpty()) {
+                username = usernameField.getText();
+                fullName = new FullName(username);
 
-        String password = passwordField.getText();
+                password = passwordField.getText();
+            } else {
+                throw new Exception("Поле имени или пароля не заполены.");
+            }
+        }
+        catch (Exception e){
+            Alert emptyFieldsAlert = new Alert(Alert.AlertType.WARNING);
+            emptyFieldsAlert.setTitle("Ошибка в заполнении полей!");
+            emptyFieldsAlert.setContentText(e.getLocalizedMessage());
+
+            emptyFieldsAlert.show();
+            return;
+        }
 
         if (checkCredentials(fullName, password)) {
             messageLabel.setText("Успешный вход!");
@@ -54,12 +67,13 @@ public class LoginFormController {
 
     //Делает запрос, которые проверяет есть ли пользователь с указанным именем и паролем в БД.
     private boolean checkCredentials(FullName fullName, String password) {
-        if(!fullName.isFullNameCorrect())
+        if (!fullName.isFullNameCorrect())
             return false;
 
-        String query = "SELECT 1 FROM doctors WHERE first_name = ? AND last_name = ? AND password = ?";
+        String query = "call find_doctor_by_password_and_name(?, ?, ?)";
 
         return DBConnectionController.searchInDB(query, fullName.getFirstName(), fullName.getLastName(), password);
+
     }
 
     //Открывает форму доктора, если данные пользователя верны.
